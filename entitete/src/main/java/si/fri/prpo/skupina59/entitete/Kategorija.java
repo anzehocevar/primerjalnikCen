@@ -3,7 +3,7 @@ package si.fri.prpo.skupina59.entitete;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "izdelek")
+@Entity(name = "kategorija")
 @NamedQueries(value =
         {
                 @NamedQuery(name = "Kategorija.getAll", query = "SELECT o FROM kategorija o")
@@ -16,7 +16,40 @@ public class Kategorija {
 
     private String ime;
 
-    @OneToMany(mappedBy = "izdelek", cascade = CascadeType.ALL)
+    private String opis;
+
+    @OneToMany(mappedBy = "kategorija", cascade = CascadeType.ALL)
     private List<Izdelek> izdelki;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getIme() {
+        return ime;
+    }
+
+    public void setIme(String ime) {
+        this.ime = ime;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
+
+    public List<Izdelek> getIzdelki() {
+        return izdelki;
+    }
+
+    public void setIzdelki(List<Izdelek> izdelki) {
+        this.izdelki = izdelki;
+    }
 }

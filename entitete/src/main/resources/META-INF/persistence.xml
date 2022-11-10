@@ -5,6 +5,7 @@
 
         <class>si.fri.prpo.skupina59.entitete.Izdelek</class>
         <class>si.fri.prpo.skupina59.entitete.Kategorija</class>
+        <class>si.fri.prpo.skupina59.entitete.Uporabnik</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
