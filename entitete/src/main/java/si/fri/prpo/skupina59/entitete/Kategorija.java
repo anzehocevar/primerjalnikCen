@@ -16,6 +16,7 @@ public class Kategorija {
 
     private String ime;
 
+    @Column(nullable = true)
     private String opis;
 
     @OneToMany(mappedBy = "kategorija", cascade = CascadeType.ALL)

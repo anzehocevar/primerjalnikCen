@@ -1,6 +1,7 @@
 package si.fri.prpo.skupina59.entitete;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "izdelek")
 @NamedQueries(value =
@@ -17,14 +18,16 @@ public class Izdelek {
 
     private String opis;
 
-    private Integer cena;
+    private Integer teza_v_gramih;
 
     @ManyToOne
     @JoinColumn(name = "kategorija_id")
     private Kategorija kategorija;
 
-    // getter in setter metode
+    @OneToMany(mappedBy = "izdelek")
+    List<IzdelekVTrgovini> izdelkiVTrgovini;
 
+    // getter in setter metode
 
     public Integer getId() {
         return id;
@@ -50,12 +53,12 @@ public class Izdelek {
         this.opis = opis;
     }
 
-    public Integer getCena() {
-        return cena;
+    public Integer getTeza_v_gramih() {
+        return teza_v_gramih;
     }
 
-    public void setCena(Integer cena) {
-        this.cena = cena;
+    public void setTeza_v_gramih(Integer teza_v_gramih) {
+        this.teza_v_gramih = teza_v_gramih;
     }
 
     public Kategorija getKategorija() {
