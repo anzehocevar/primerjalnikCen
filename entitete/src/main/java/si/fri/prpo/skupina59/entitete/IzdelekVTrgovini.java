@@ -20,5 +20,41 @@ public class IzdelekVTrgovini {
 
     private Integer zaloga;
 
+    //getter in setter metode
+
+    public Izdelek getIzdelek() {
+        return izdelek;
+    }
+
+    public void setIzdelek(Izdelek izdelek) {
+        this.izdelek = izdelek;
+    }
+
+    public Trgovina getTrgovina() {
+        return trgovina;
+    }
+
+    public void setTrgovina(Trgovina trgovina) {
+        this.trgovina = trgovina;
+    }
+
+    public double getCena() {
+        return cena;
+    }
+
+    public void setCena(double cena) {
+        this.cena = cena;
+    }
+
+    public Integer getZaloga() {
+        return zaloga;
+    }
+
+    public void setZaloga(Integer zaloga) {
+        this.zaloga = zaloga;
+    }
+
+
+
 
 }

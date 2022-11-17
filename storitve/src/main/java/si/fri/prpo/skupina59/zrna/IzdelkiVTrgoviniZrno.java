@@ -1,0 +1,65 @@
+package si.fri.prpo.skupina59.zrna;
+
+import si.fri.prpo.skupina59.entitete.Izdelek;
+import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.logging.Logger;
+
+@ApplicationScoped
+public class IzdelkiVTrgoviniZrno {
+
+    @PersistenceContext(unitName = "primerjalnik-cen-jpa")
+    private EntityManager em;
+
+    private static final Logger logger = Logger.getLogger(IzdelkiVTrgoviniZrno.class.getName());
+
+    @PostConstruct
+    private void logConstruction(){
+        logger.info("IzdelkiVTrgoviniZrno je bilo ustvarjeno");
+    }
+
+    @PreDestroy
+    private void logDestruct(){
+        logger.info("IzdelkiVTrgoviniZrno je bilo uniceno");
+    }
+
+    public IzdelekVTrgovini pridobiIzdelekVTrgovini(Integer id){
+        return em.find(IzdelekVTrgovini.class, id);
+    }
+
+    @Transactional
+    public IzdelekVTrgovini dodajIzdelekVTrgovini(IzdelekVTrgovini izdelekVTrgovini){
+        if(izdelekVTrgovini != null)
+            em.persist(izdelekVTrgovini);
+        return izdelekVTrgovini;
+    }
+
+    @Transactional
+    public IzdelekVTrgovini posodobiIzdelekVTrgovini(Integer id){
+        IzdelekVTrgovini izdelekVTrgovini = pridobiIzdelekVTrgovini(id);
+        if(izdelekVTrgovini != null)
+            em.merge(izdelekVTrgovini);
+        return izdelekVTrgovini;
+    }
+
+    @Transactional
+    public boolean izbrisiIzdelekVTrgovini(Integer id){
+        IzdelekVTrgovini izdelekVTrgovini = pridobiIzdelekVTrgovini(id);
+        if (izdelekVTrgovini != null){
+            em.remove(izdelekVTrgovini);
+            return true;
+        }
+        return false;
+    }
+
+
+}

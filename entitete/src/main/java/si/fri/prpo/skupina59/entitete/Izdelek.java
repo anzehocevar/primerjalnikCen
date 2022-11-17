@@ -6,7 +6,10 @@ import java.util.List;
 @Entity(name = "izdelek")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Izdelek.getAll", query = "SELECT o FROM izdelek o")
+                @NamedQuery(name = "Izdelek.getAll", query = "SELECT o FROM izdelek o"),
+                @NamedQuery(name = "Izdelek.getById", query = "SELECT o FROM izdelek o WHERE o.id = :id"),
+                @NamedQuery(name = "Izdelek.getByName", query = "SELECT o FROM izdelek o WHERE o.ime = :ime")
+
         })
 public class Izdelek {
 
@@ -24,10 +27,17 @@ public class Izdelek {
     @JoinColumn(name = "kategorija_id")
     private Kategorija kategorija;
 
-    @OneToMany(mappedBy = "izdelek")
+    @OneToMany(mappedBy = "izdelek", fetch = FetchType.LAZY)
     List<IzdelekVTrgovini> izdelkiVTrgovini;
 
     // getter in setter metode
+    public List<IzdelekVTrgovini> getIzdelkiVTrgovini() {
+        return izdelkiVTrgovini;
+    }
+
+    public void setIzdelkiVTrgovini(List<IzdelekVTrgovini> izdelkiVTrgovini) {
+        this.izdelkiVTrgovini = izdelkiVTrgovini;
+    }
 
     public Integer getId() {
         return id;

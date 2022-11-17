@@ -22,6 +22,8 @@ public class Kategorija {
     @OneToMany(mappedBy = "kategorija", cascade = CascadeType.ALL)
     private List<Izdelek> izdelki;
 
+    //getter in setter metode
+
     public Integer getId() {
         return id;
     }

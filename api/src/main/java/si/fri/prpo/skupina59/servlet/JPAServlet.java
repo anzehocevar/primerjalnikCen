@@ -1,7 +1,11 @@
 package si.fri.prpo.skupina59.servlet;
 
+import org.eclipse.jetty.server.ResponseWriter;
 import si.fri.prpo.skupina59.entitete.Izdelek;
+import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
+import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.zrna.IzdelkiZrno;
+import si.fri.prpo.skupina59.zrna.KategorijaZrno;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -17,26 +21,27 @@ public class JPAServlet extends HttpServlet {
     @Inject
     private IzdelkiZrno izdelkiZrno;
 
+    @Inject
+    KategorijaZrno kategorije;
+
+    private int stevec;
+
+    public static Kategorija ustvariKategorijo(String ime, String opis){
+        Kategorija k = new Kategorija();
+        k.setIme(ime);
+        k.setOpis(opis);
+        return k;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // izpis izdelkov na spletno stran
-        resp.getWriter().println("IZPIS Z NAMED QUERY:");
-        List<Izdelek> izdelki = izdelkiZrno.getIzdelki();
-        for(Izdelek i : izdelki) {
-            resp.getWriter().println(i.getIme());
-            resp.getWriter().println(i.getOpis());
-            resp.getWriter().println(i.getKategorija().getIme());
+        //Dodajmo kategorijo in nato vse kategorije izpisimo
+        kategorije.posodobiKategorijo(1, "Posodobljena kategorija " + stevec, "Ta kategorija posodablja stevec");
+        ++stevec;
+        kategorije.dodajKategorijo(ustvariKategorijo("Nova kategorija", "Kategorija za opravljanje testov"));
+        for(Kategorija k : kategorije.pridobiVseKategorije()){
+            resp.getWriter().println(k.getIme() + ", " + k.getOpis());
         }
-
-        resp.getWriter().println();
-        resp.getWriter().println("IZPIS IZDELKOV Z CRITERIA API:");
-        izdelki = izdelkiZrno.getIzdelkiCriteriaAPI();
-        for(Izdelek i : izdelki) {
-            resp.getWriter().println(i.getIme());
-            resp.getWriter().println(i.getOpis());
-            resp.getWriter().println(i.getKategorija().getIme());
-        }
-
 
     }
 }
