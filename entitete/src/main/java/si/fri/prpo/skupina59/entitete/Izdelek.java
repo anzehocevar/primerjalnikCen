@@ -9,8 +9,7 @@ import java.util.List;
         @NamedQuery(name = "Izdelek.getAll", query = "SELECT o FROM izdelek o"),
         @NamedQuery(name = "Izdelek.getById", query = "SELECT o FROM izdelek o WHERE o.id = :id"),
         @NamedQuery(name = "Izdelek.getByName", query = "SELECT o FROM izdelek o WHERE o.ime = :ime"),
-        @NamedQuery(name = "Izdelek.getByLike", query = "SELECT o FROM izdelek o WHERE o.ime LIKE %:ime%")
-    })
+            @NamedQuery(name = "Izdelek.getByLike", query = "SELECT o FROM izdelek o WHERE o.ime LIKE CONCAT('%',:ime,'%')")    })
 public class Izdelek {
 
     @Id
