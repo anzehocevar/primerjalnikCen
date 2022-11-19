@@ -5,9 +5,12 @@ import java.util.List;
 
 @Entity(name = "izdelek")
 @NamedQueries(value =
-        {
-                @NamedQuery(name = "Izdelek.getAll", query = "SELECT o FROM izdelek o")
-        })
+    {
+        @NamedQuery(name = "Izdelek.getAll", query = "SELECT o FROM izdelek o"),
+        @NamedQuery(name = "Izdelek.getById", query = "SELECT o FROM izdelek o WHERE o.id = :id"),
+        @NamedQuery(name = "Izdelek.getByName", query = "SELECT o FROM izdelek o WHERE o.ime = :ime"),
+        @NamedQuery(name = "Izdelek.getByLike", query = "SELECT o FROM izdelek o WHERE o.ime LIKE %:ime%")
+    })
 public class Izdelek {
 
     @Id

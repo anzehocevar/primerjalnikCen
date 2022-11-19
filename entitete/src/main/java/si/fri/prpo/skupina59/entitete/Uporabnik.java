@@ -4,9 +4,9 @@ import javax.persistence.*;
 
 @Entity(name = "uporabnik")
 @NamedQueries(value =
-        {
-                @NamedQuery(name = "Uporabnik.getAll", query = "SELECT o FROM uporabnik o")
-        })
+    {
+        @NamedQuery(name = "Uporabnik.getAll", query = "SELECT o FROM uporabnik o")
+    })
 public class Uporabnik {
 
     @Id

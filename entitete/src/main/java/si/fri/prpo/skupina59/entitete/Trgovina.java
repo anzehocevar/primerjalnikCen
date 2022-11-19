@@ -3,6 +3,10 @@ package si.fri.prpo.skupina59.entitete;
 import javax.persistence.*;
 import java.util.List;
 
+@NamedQueries(value =
+    {
+        @NamedQuery(name = "Trgovina.getAll", query = "SELECT o FROM trgovina o")
+    })
 @Entity(name = "trgovina")
 public class Trgovina {
     @Id

@@ -5,9 +5,9 @@ import java.util.List;
 
 @Entity(name = "kategorija")
 @NamedQueries(value =
-        {
-                @NamedQuery(name = "Kategorija.getAll", query = "SELECT o FROM kategorija o")
-        })
+    {
+        @NamedQuery(name = "Kategorija.getAll", query = "SELECT o FROM kategorija o")
+    })
 public class Kategorija {
 
     @Id
