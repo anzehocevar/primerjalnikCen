@@ -10,11 +10,13 @@ import javax.persistence.*;
 public class IzdelekVTrgovini {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id;
+
     @ManyToOne
     @JoinColumn(name = "izdelek_id")
     private Izdelek izdelek;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "trgovina_id")
     private Trgovina trgovina;
@@ -58,7 +60,11 @@ public class IzdelekVTrgovini {
         this.zaloga = zaloga;
     }
 
+    public Integer getId() {
+        return Id;
+    }
 
-
-
+    public void setId(Integer id) {
+        Id = id;
+    }
 }

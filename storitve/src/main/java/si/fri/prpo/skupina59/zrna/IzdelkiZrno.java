@@ -51,10 +51,10 @@ public class IzdelkiZrno {
     }
 
     @Transactional
-    public Izdelek posodobiIzdelek(Integer id){
-        Izdelek izdelek = pridobiIzdelek(id);
-        if(izdelek != null)
+    public Izdelek posodobiIzdelek(Izdelek izdelek){
+        if(izdelek != null){
             em.merge(izdelek);
+        }
         return izdelek;
     }
 

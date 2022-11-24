@@ -1,9 +1,11 @@
 package si.fri.prpo.skupina59.servlet;
 
 import org.eclipse.jetty.server.ResponseWriter;
+import si.fri.prpo.skupina59.DTO.KategorijaDTO;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
 import si.fri.prpo.skupina59.entitete.Kategorija;
+import si.fri.prpo.skupina59.poslovnaZrna.UpravljanjeKategorijeZrno;
 import si.fri.prpo.skupina59.zrna.IzdelkiZrno;
 import si.fri.prpo.skupina59.zrna.KategorijaZrno;
 
@@ -22,26 +24,21 @@ public class JPAServlet extends HttpServlet {
     private IzdelkiZrno izdelkiZrno;
 
     @Inject
-    KategorijaZrno kategorije;
+    UpravljanjeKategorijeZrno zrno;
 
     private int stevec;
 
-    public static Kategorija ustvariKategorijo(String ime, String opis){
-        Kategorija k = new Kategorija();
-        k.setIme(ime);
-        k.setOpis(opis);
-        return k;
-    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Dodajmo kategorijo in nato vse kategorije izpisimo
-        kategorije.posodobiKategorijo(1, "Posodobljena kategorija " + stevec, "Ta kategorija posodablja stevec");
         ++stevec;
-        kategorije.dodajKategorijo(ustvariKategorijo("Nova kategorija", "Kategorija za opravljanje testov"));
-        for(Kategorija k : kategorije.pridobiVseKategorije()){
-            resp.getWriter().println(k.getIme() + ", " + k.getOpis());
-        }
+        KategorijaDTO k = new KategorijaDTO();
+        k.setIme("Kategorija " + stevec);
+        k.setOpis("To kategorijo sem ustvaril ker nekaj");
+        zrno.dodajKategorijo(k);
 
+        resp.getWriter().println(k.getIme());
     }
 }
