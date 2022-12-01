@@ -1,6 +1,7 @@
 package si.fri.prpo.skupina59.poslovnaZrna;
 
 import si.fri.prpo.skupina59.DTO.IzdelekDTO;
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
 import si.fri.prpo.skupina59.entitete.Kategorija;
@@ -11,6 +12,7 @@ import si.fri.prpo.skupina59.zrna.KategorijaZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class UpravljanjeIzdelkovZrno {
@@ -23,8 +25,35 @@ public class UpravljanjeIzdelkovZrno {
 
     @Inject
     private IzdelkiVTrgoviniZrno zrnoIzdelekVTrgovini;
+    @BeleziKlice
+    public List<IzdelekDTO> pridobiVseIzdelke(){
+        List<Izdelek> seznam = zrnoIzdelek.pridobiVseIzdelke();
+        List<IzdelekDTO> builder = new ArrayList<>();
 
+        for(Izdelek i : seznam){
+            IzdelekDTO b = new IzdelekDTO();
+            b.setId(i.getId());
+            b.setIme(i.getIme());
+            b.setTeza_v_gramih(i.getTeza_v_gramih());
+            b.setOpis(i.getOpis());
+            builder.add(b);
+        }
 
+        return builder;
+    }
+    @BeleziKlice
+    public IzdelekDTO pridobiIzdelek(Integer id){
+        Izdelek i = zrnoIzdelek.pridobiIzdelek(id);
+        IzdelekDTO b = new IzdelekDTO();
+
+        b.setId(i.getId());
+        b.setIme(i.getIme());
+        b.setTeza_v_gramih(i.getTeza_v_gramih());
+        b.setOpis(i.getOpis());
+
+        return b;
+    }
+    @BeleziKlice
     public Izdelek dodajIzdelek(IzdelekDTO i){
         Izdelek novIzdelek = new Izdelek();
         novIzdelek.setIme(i.getIme());
@@ -42,7 +71,7 @@ public class UpravljanjeIzdelkovZrno {
 
         return novIzdelek;
     }
-
+    @BeleziKlice
     public void odstraniIzdelek(IzdelekDTO i){
         Izdelek izbrisanIzdelek = zrnoIzdelek.pridobiIzdelek(i.getId());
         Kategorija k = zrnoKategorija.pridobiKategorijo(i.getKategorijaId());
@@ -56,7 +85,7 @@ public class UpravljanjeIzdelkovZrno {
 
     }
 
-
+    @BeleziKlice
     public Izdelek spremeniIzdelek(IzdelekDTO i){
         Izdelek updateIzdelek = zrnoIzdelek.pridobiIzdelek(i.getId());
         updateIzdelek.setIme(i.getIme());

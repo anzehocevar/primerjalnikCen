@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.zrna;
 
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 
 import javax.annotation.PostConstruct;

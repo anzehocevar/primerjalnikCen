@@ -27,6 +27,5 @@ public class UpravljanjeKategorijeZrno {
         k.setIzdelki(izdelki);
         zrnoKategorija.dodajKategorijo(k);
 
-
     }
 }
