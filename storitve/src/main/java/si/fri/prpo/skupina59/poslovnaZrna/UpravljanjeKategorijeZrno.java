@@ -1,6 +1,7 @@
 package si.fri.prpo.skupina59.poslovnaZrna;
 
 import si.fri.prpo.skupina59.DTO.KategorijaDTO;
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.zrna.IzdelkiZrno;
@@ -18,6 +19,7 @@ public class UpravljanjeKategorijeZrno {
     @Inject
     private KategorijaZrno zrnoKategorija;
 
+    @BeleziKlice
     public void dodajKategorijo(KategorijaDTO kategorija){
         Kategorija k = new Kategorija();
         List<Izdelek> izdelki = new ArrayList<>();

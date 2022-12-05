@@ -1,6 +1,7 @@
 package si.fri.prpo.skupina59.poslovnaZrna;
 
 import si.fri.prpo.skupina59.DTO.IzdelekVTrgoviniDTO;
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
 import si.fri.prpo.skupina59.entitete.Trgovina;
@@ -21,7 +22,7 @@ public class UpravljanjeIzdelkovVTrgoviniZrno {
     @Inject
     private TrgovinaZrno zrnoTrgovina;
 
-
+    @BeleziKlice
     public IzdelekVTrgovini dodajIzdelekVTrgovino(IzdelekVTrgoviniDTO ivt){
         IzdelekVTrgovini novIzdelekVTrgovini = new IzdelekVTrgovini();
         Izdelek izdelek = zrnoIzdelek.pridobiIzdelek(ivt.getIzdelekId());

@@ -1,6 +1,7 @@
 package si.fri.prpo.skupina59.poslovnaZrna;
 
 import si.fri.prpo.skupina59.DTO.UporabnikDTO;
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Uporabnik;
 import si.fri.prpo.skupina59.zrna.UporabnikZrno;
 
@@ -11,6 +12,7 @@ public class UpravljanjeUporabnikovZrno {
     @Inject
     private UporabnikZrno zrnoUporabnik;
 
+    @BeleziKlice
     private Uporabnik dodajUporabnika(UporabnikDTO u){
         Uporabnik novUporabnik = new Uporabnik();
         novUporabnik.setIme(u.getIme());

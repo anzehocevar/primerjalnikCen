@@ -25,6 +25,7 @@ public class UpravljanjeIzdelkovZrno {
 
     @Inject
     private IzdelkiVTrgoviniZrno zrnoIzdelekVTrgovini;
+
     @BeleziKlice
     public List<IzdelekDTO> pridobiVseIzdelke(){
         List<Izdelek> seznam = zrnoIzdelek.pridobiVseIzdelke();
@@ -41,6 +42,7 @@ public class UpravljanjeIzdelkovZrno {
 
         return builder;
     }
+
     @BeleziKlice
     public IzdelekDTO pridobiIzdelek(Integer id){
         Izdelek i = zrnoIzdelek.pridobiIzdelek(id);
@@ -53,6 +55,7 @@ public class UpravljanjeIzdelkovZrno {
 
         return b;
     }
+
     @BeleziKlice
     public Izdelek dodajIzdelek(IzdelekDTO i){
         Izdelek novIzdelek = new Izdelek();
@@ -71,6 +74,7 @@ public class UpravljanjeIzdelkovZrno {
 
         return novIzdelek;
     }
+
     @BeleziKlice
     public void odstraniIzdelek(IzdelekDTO i){
         Izdelek izbrisanIzdelek = zrnoIzdelek.pridobiIzdelek(i.getId());

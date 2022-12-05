@@ -21,8 +21,10 @@ public class BelezenjeKlicevInterceptor {
 
     @AroundInvoke
     public Object povecajGlobalniStevec(InvocationContext context) throws Exception{
-        zrno.povecajGlobalniStevec();
+        String klicanaFunckija = context.getMethod().toString();
+        zrno.povecajStevce(klicanaFunckija);
         logger.info("Globalni stevec metod je trenutno " + zrno.getGlobalniStevec());
+        logger.info("Stevec za metodo " + klicanaFunckija + " je trenutno " + zrno.getSpecStevec(klicanaFunckija));
 
         return context.proceed();
 
