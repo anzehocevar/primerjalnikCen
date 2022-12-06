@@ -59,14 +59,11 @@ public class KategorijaZrno {
     }
 
     @Transactional
-    public Kategorija posodobiKategorijo(Integer id, String ime, String opis){
-        Kategorija kategorija = pridobiKategorijo(id);
-        if(kategorija != null){
-            kategorija.setIme(ime);
-            kategorija.setOpis(opis);
-            em.merge(kategorija);
+    public Kategorija posodobiKategorijo(Kategorija k){
+        if(k != null){
+            em.merge(k);
         }
-        return kategorija;
+        return k;
     }
 
     @Transactional

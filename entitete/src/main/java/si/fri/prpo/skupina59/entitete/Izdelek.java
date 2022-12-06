@@ -1,6 +1,7 @@
 package si.fri.prpo.skupina59.entitete;
 
 import javax.persistence.*;
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.List;
 
 @Entity(name = "izdelek")
@@ -26,6 +27,7 @@ public class Izdelek {
     @JoinColumn(name = "kategorija_id")
     private Kategorija kategorija;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "izdelek", fetch = FetchType.LAZY)
     List<IzdelekVTrgovini> izdelkiVTrgovini;
 

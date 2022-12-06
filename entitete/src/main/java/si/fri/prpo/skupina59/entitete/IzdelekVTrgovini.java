@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity(name = "izdelekvtrgovini")

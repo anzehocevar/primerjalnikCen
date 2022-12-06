@@ -44,11 +44,10 @@ public class IzdelkiVTrgoviniZrno {
     }
 
     @Transactional
-    public IzdelekVTrgovini posodobiIzdelekVTrgovini(Integer id){
-        IzdelekVTrgovini izdelekVTrgovini = pridobiIzdelekVTrgovini(id);
-        if(izdelekVTrgovini != null)
-            em.merge(izdelekVTrgovini);
-        return izdelekVTrgovini;
+    public IzdelekVTrgovini posodobiIzdelekVTrgovini(IzdelekVTrgovini ivt){
+        if(ivt != null)
+            em.merge(ivt);
+        return ivt;
     }
 
     @Transactional

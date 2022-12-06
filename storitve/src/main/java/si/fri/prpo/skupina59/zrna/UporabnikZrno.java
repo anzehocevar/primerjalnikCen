@@ -49,11 +49,10 @@ public class UporabnikZrno {
     }
 
     @Transactional
-    public Uporabnik posodobiUporabnika(Integer id){
-        Uporabnik uporabnik = pridobiUporabnika(id);
-        if(uporabnik != null)
-            em.merge(uporabnik);
-        return uporabnik;
+    public Uporabnik posodobiUporabnika(Uporabnik u){
+        if(u != null)
+            em.merge(u);
+        return u;
     }
 
     @Transactional

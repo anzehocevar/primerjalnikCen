@@ -50,11 +50,10 @@ public class TrgovinaZrno {
     }
 
     @Transactional
-    public Trgovina posodobiTrgovino(Integer id){
-        Trgovina trgovina = pridobiTrgovino(id);
-        if(trgovina != null)
-            em.merge(trgovina);
-        return trgovina;
+    public Trgovina posodobiTrgovino(Trgovina t){
+        if(t != null)
+            em.merge(t);
+        return t;
     }
 
     @Transactional
