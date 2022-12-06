@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.zrna;
 
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 
@@ -27,17 +28,19 @@ public class KategorijaZrno {
 
     UUID uuid = UUID.randomUUID();
 
-
+    @BeleziKlice
     @PostConstruct
     private void logConstruction(){
         logger.info("KategorijaZrno je bilo ustvarjeno");
     }
 
+    @BeleziKlice
     @PreDestroy
     private void logDestruct(){
         logger.info("KategorijaZrno je bilo uniceno");
     }
 
+    @BeleziKlice
     public List<Kategorija> pridobiVseKategorije() {
 
         // implementacija
@@ -45,10 +48,12 @@ public class KategorijaZrno {
         return q.getResultList();
     }
 
+    @BeleziKlice
     public Kategorija pridobiKategorijo(Integer id){
         return em.find(Kategorija.class, id);
     }
 
+    @BeleziKlice
     @Transactional
     public Kategorija dodajKategorijo(Kategorija kategorija){
         //Pri ApplicationScoped je vedno isti pri RequestScoped pa se spreminja
@@ -58,6 +63,7 @@ public class KategorijaZrno {
         return kategorija;
     }
 
+    @BeleziKlice
     @Transactional
     public Kategorija posodobiKategorijo(Kategorija k){
         if(k != null){
@@ -66,6 +72,7 @@ public class KategorijaZrno {
         return k;
     }
 
+    @BeleziKlice
     @Transactional
     public boolean izbrisiKategorijo(Integer id){
         Kategorija kategorija = pridobiKategorijo(id);

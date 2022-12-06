@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 @BeleziKlice
 public class BelezenjeKlicevInterceptor {
 
-    private static final Logger logger = Logger.getLogger(BelezenjeKlicevZrno.class.getName());
 
     @Inject
     private BelezenjeKlicevZrno zrno;
@@ -23,8 +22,7 @@ public class BelezenjeKlicevInterceptor {
     public Object povecajGlobalniStevec(InvocationContext context) throws Exception{
         String klicanaFunckija = context.getMethod().toString();
         zrno.povecajStevce(klicanaFunckija);
-        logger.info("Globalni stevec metod je trenutno " + zrno.getGlobalniStevec());
-        logger.info("Stevec za metodo " + klicanaFunckija + " je trenutno " + zrno.getSpecStevec(klicanaFunckija));
+
 
         return context.proceed();
 

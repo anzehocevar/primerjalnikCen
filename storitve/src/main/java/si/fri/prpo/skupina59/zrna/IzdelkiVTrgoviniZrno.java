@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.zrna;
 
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
 
@@ -22,20 +23,24 @@ public class IzdelkiVTrgoviniZrno {
 
     private static final Logger logger = Logger.getLogger(IzdelkiVTrgoviniZrno.class.getName());
 
+    @BeleziKlice
     @PostConstruct
     private void logConstruction(){
         logger.info("IzdelkiVTrgoviniZrno je bilo ustvarjeno");
     }
 
+    @BeleziKlice
     @PreDestroy
     private void logDestruct(){
         logger.info("IzdelkiVTrgoviniZrno je bilo uniceno");
     }
 
+    @BeleziKlice
     public IzdelekVTrgovini pridobiIzdelekVTrgovini(Integer id){
         return em.find(IzdelekVTrgovini.class, id);
     }
 
+    @BeleziKlice
     @Transactional
     public IzdelekVTrgovini dodajIzdelekVTrgovini(IzdelekVTrgovini izdelekVTrgovini){
         if(izdelekVTrgovini != null)
@@ -43,6 +48,7 @@ public class IzdelkiVTrgoviniZrno {
         return izdelekVTrgovini;
     }
 
+    @BeleziKlice
     @Transactional
     public IzdelekVTrgovini posodobiIzdelekVTrgovini(IzdelekVTrgovini ivt){
         if(ivt != null)
@@ -50,6 +56,7 @@ public class IzdelkiVTrgoviniZrno {
         return ivt;
     }
 
+    @BeleziKlice
     @Transactional
     public boolean izbrisiIzdelekVTrgovini(Integer id){
         IzdelekVTrgovini izdelekVTrgovini = pridobiIzdelekVTrgovini(id);

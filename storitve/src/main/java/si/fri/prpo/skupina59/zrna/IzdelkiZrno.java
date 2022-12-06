@@ -22,17 +22,19 @@ public class IzdelkiZrno {
 
     private static final Logger logger = Logger.getLogger(IzdelkiZrno.class.getName());
 
+    @BeleziKlice
     @PostConstruct
     private void logConstruction(){
         logger.info("IzdelkiZrno je bilo ustvarjeno");
     }
 
+    @BeleziKlice
     @PreDestroy
     private void logDestruct(){
         logger.info("IzdelkiZrno je bilo uniceno");
     }
 
-
+    @BeleziKlice
     public List<Izdelek> pridobiVseIzdelke() {
 
         // implementacija
@@ -40,10 +42,12 @@ public class IzdelkiZrno {
         return q.getResultList();
     }
 
+    @BeleziKlice
     public Izdelek pridobiIzdelek(Integer id){
         return em.find(Izdelek.class, id);
     }
 
+    @BeleziKlice
     @Transactional
     public Izdelek dodajIzdelek(Izdelek izdelek){
         if(izdelek != null)
@@ -51,6 +55,7 @@ public class IzdelkiZrno {
         return izdelek;
     }
 
+    @BeleziKlice
     @Transactional
     public Izdelek posodobiIzdelek(Izdelek izdelek){
         if(izdelek != null){
@@ -59,6 +64,7 @@ public class IzdelkiZrno {
         return izdelek;
     }
 
+    @BeleziKlice
     @Transactional
     public boolean izbrisiIzdelek(Integer id){
         Izdelek izdelek = pridobiIzdelek(id);

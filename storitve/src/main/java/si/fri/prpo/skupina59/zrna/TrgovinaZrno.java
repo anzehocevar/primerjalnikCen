@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.zrna;
 
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 
 import javax.annotation.PostConstruct;
@@ -21,16 +22,19 @@ public class TrgovinaZrno {
 
     private static final Logger logger = Logger.getLogger(Trgovina.class.getName());
 
+    @BeleziKlice
     @PostConstruct
     private void logConstruction(){
         logger.info("Trgovina je bilo ustvarjeno");
     }
 
+    @BeleziKlice
     @PreDestroy
     private void logDestruct(){
         logger.info("Trgovina je bilo uniceno");
     }
 
+    @BeleziKlice
     public List<Trgovina> pridobiVseTrgovine() {
 
         // implementacija
@@ -38,10 +42,12 @@ public class TrgovinaZrno {
         return q.getResultList();
     }
 
+    @BeleziKlice
     public Trgovina pridobiTrgovino(Integer id){
         return em.find(Trgovina.class, id);
     }
 
+    @BeleziKlice
     @Transactional
     public Trgovina dodajTrgovino(Trgovina trgovina){
         if(trgovina != null)
@@ -49,6 +55,7 @@ public class TrgovinaZrno {
         return trgovina;
     }
 
+    @BeleziKlice
     @Transactional
     public Trgovina posodobiTrgovino(Trgovina t){
         if(t != null)
@@ -56,6 +63,7 @@ public class TrgovinaZrno {
         return t;
     }
 
+    @BeleziKlice
     @Transactional
     public boolean izbrisiTrgovino(Integer id){
         Trgovina trgovina = pridobiTrgovino(id);

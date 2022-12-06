@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.zrna;
 
+import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
@@ -20,16 +21,19 @@ public class UporabnikZrno {
 
     private static final Logger logger = Logger.getLogger(UporabnikZrno.class.getName());
 
+    @BeleziKlice
     @PostConstruct
     private void logConstruction(){
         logger.info("UporabnikZrno je bilo ustvarjeno");
     }
 
+    @BeleziKlice
     @PreDestroy
     private void logDestruct(){
         logger.info("UporabnikZrno je bilo uniceno");
     }
 
+    @BeleziKlice
     public List<Uporabnik> pridobiVseUporabninke() {
 
         // implementacija
@@ -37,10 +41,12 @@ public class UporabnikZrno {
         return q.getResultList();
     }
 
+    @BeleziKlice
     public Uporabnik pridobiUporabnika(Integer id){
         return em.find(Uporabnik.class, id);
     }
 
+    @BeleziKlice
     @Transactional
     public Uporabnik dodajUporabnik(Uporabnik uporabnik){
         if(uporabnik != null)
@@ -48,6 +54,7 @@ public class UporabnikZrno {
         return uporabnik;
     }
 
+    @BeleziKlice
     @Transactional
     public Uporabnik posodobiUporabnika(Uporabnik u){
         if(u != null)
@@ -55,6 +62,7 @@ public class UporabnikZrno {
         return u;
     }
 
+    @BeleziKlice
     @Transactional
     public boolean izbrisiUporabnika(Integer id){
         Uporabnik uporabnik = pridobiUporabnika(id);
