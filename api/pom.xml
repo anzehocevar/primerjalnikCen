@@ -62,6 +62,11 @@
             <groupId>si.fri.prpo.skupina59</groupId>
             <artifactId>storitve</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.rest</groupId>
+            <artifactId>kumuluzee-rest-core</artifactId>
+        </dependency>
     </dependencies>
 
 
