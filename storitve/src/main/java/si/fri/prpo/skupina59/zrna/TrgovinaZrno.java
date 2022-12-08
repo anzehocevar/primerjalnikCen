@@ -1,6 +1,9 @@
 package si.fri.prpo.skupina59.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.skupina59.anotacije.BeleziKlice;
+import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +35,11 @@ public class TrgovinaZrno {
     @PreDestroy
     private void logDestruct(){
         logger.info("Trgovina je bilo uniceno");
+    }
+
+    @BeleziKlice
+    public List<Trgovina> pridobiTrgovine(QueryParameters q){
+        return JPAUtils.queryEntities(em, Trgovina.class, q);
     }
 
     @BeleziKlice

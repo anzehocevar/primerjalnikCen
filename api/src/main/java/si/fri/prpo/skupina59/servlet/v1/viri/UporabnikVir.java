@@ -1,14 +1,18 @@
 package si.fri.prpo.skupina59.servlet.v1.viri;
 
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import si.fri.prpo.skupina59.entitete.Trgovina;
 import si.fri.prpo.skupina59.entitete.Uporabnik;
 import si.fri.prpo.skupina59.zrna.UporabnikZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,17 +24,21 @@ public class UporabnikVir {
     @Inject
     private UporabnikZrno UporabnikZrno;
 
+    @Context
+    protected UriInfo uriInfo;
+
     @GET
     public Response vrniUporabnike(){
 
-        List<Uporabnik> uporabniki = UporabnikZrno.pridobiVseUporabninke();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        List<Uporabnik> uporabniki = UporabnikZrno.pridobiUporabnike(query);// pridobi izdelke
 
         return Response.status(Response.Status.OK).entity(uporabniki).build();
     }
 
     @GET
     @Path("{id}")
-    public Response vrniUporabnike(@PathParam("id") Integer id){
+    public Response vrniUporabnika(@PathParam("id") Integer id){
 
         Uporabnik uporabnik = UporabnikZrno.pridobiUporabnika(id);
 

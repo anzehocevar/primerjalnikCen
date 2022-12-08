@@ -40,6 +40,7 @@ public class IzdelkiVTrgoviniZrno {
         return em.find(IzdelekVTrgovini.class, id);
     }
 
+
     @BeleziKlice
     @Transactional
     public IzdelekVTrgovini dodajIzdelekVTrgovini(IzdelekVTrgovini izdelekVTrgovini){
