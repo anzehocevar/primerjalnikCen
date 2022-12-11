@@ -1,5 +1,11 @@
 package si.fri.prpo.skupina59.servlet.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.skupina59.DTO.IzdelekDTO;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.poslovnaZrna.UpravljanjeIzdelkovZrno;
@@ -8,8 +14,10 @@ import si.fri.prpo.skupina59.zrna.IzdelkiZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +29,19 @@ public class IzdelekVir {
     @Inject
     private IzdelkiZrno IzdelkiZrno;
 
+    @Context
+    protected UriInfo uriInfo;
+
     @GET
+    @Operation(summary = "Pridobi vse izdelke", description = "Vrne vse izdelke. Omogoča uporabo ostranjevanja, filtriranja in sortiranja")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
     public Response vrniIzdelke(){
 
-        List<Izdelek> izdelki = IzdelkiZrno.pridobiVseIzdelke();// pridobi izdelke
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        List<Izdelek> izdelki = IzdelkiZrno.pridobiIzdelke(query);// pridobi izdelke
 
         return Response.status(Response.Status.OK).entity(izdelki).build();
     }

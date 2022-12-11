@@ -1,5 +1,7 @@
 package si.fri.prpo.skupina59.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 
@@ -40,6 +42,11 @@ public class IzdelkiZrno {
         // implementacija
         Query q = em.createNamedQuery("Izdelek.getAll");
         return q.getResultList();
+    }
+
+    @BeleziKlice
+    public List<Izdelek> pridobiIzdelke(QueryParameters q){
+        return JPAUtils.queryEntities(em, Izdelek.class, q);
     }
 
     @BeleziKlice

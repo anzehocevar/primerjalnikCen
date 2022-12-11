@@ -1,6 +1,9 @@
 package si.fri.prpo.skupina59.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.skupina59.anotacije.BeleziKlice;
+import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +42,11 @@ public class UporabnikZrno {
         // implementacija
         Query q = em.createNamedQuery("Uporabnik.getAll");
         return q.getResultList();
+    }
+
+    @BeleziKlice
+    public List<Uporabnik> pridobiUporabnike(QueryParameters q){
+        return JPAUtils.queryEntities(em, Uporabnik.class, q);
     }
 
     @BeleziKlice

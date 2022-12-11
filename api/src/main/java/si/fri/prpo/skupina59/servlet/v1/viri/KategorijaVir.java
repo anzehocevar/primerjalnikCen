@@ -1,14 +1,18 @@
 package si.fri.prpo.skupina59.servlet.v1.viri;
 
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.zrna.KategorijaZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +24,14 @@ public class KategorijaVir {
     @Inject
     private KategorijaZrno KategorijaZrno;
 
+    @Context
+    protected UriInfo uriInfo;
+
     @GET
     public Response vrniKategorije(){
 
-        List<Kategorija> kategorije = KategorijaZrno.pridobiVseKategorije();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        List<Kategorija> kategorije = KategorijaZrno.pridobiKategorije(query);// pridobi izdelke
 
         return Response.status(Response.Status.OK).entity(kategorije).build();
     }
