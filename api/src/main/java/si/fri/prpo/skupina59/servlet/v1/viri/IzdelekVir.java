@@ -9,10 +9,13 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.skupina59.DTO.IzdelekDTO;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.poslovnaZrna.UpravljanjeIzdelkovZrno;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajIzdelekInterceptor;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajIzdelekVTrgoviniInterceptor;
 import si.fri.prpo.skupina59.zrna.IzdelkiZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -55,12 +58,15 @@ public class IzdelekVir {
         return Response.status(Response.Status.OK).entity(izdelek).build();
     }
 
+
     @POST
+    @Interceptors(ValidirajIzdelekInterceptor.class)
     public Response dodajIzdelek(Izdelek i){
         return Response.status(Response.Status.CREATED).entity(IzdelkiZrno.dodajIzdelek(i)).build();
     }
 
     @DELETE
+    @Interceptors(ValidirajIzdelekInterceptor.class)
     public Response odstraniIzdelek(Izdelek i){
         return Response.status(Response.Status.OK).entity(IzdelkiZrno.izbrisiIzdelek(i.getId())).build();
     }
@@ -72,6 +78,7 @@ public class IzdelekVir {
     }
 
     @PUT
+    @Interceptors(ValidirajIzdelekInterceptor.class)
     public Response posodobiIzdelek(Izdelek i){
         return Response.status(Response.Status.OK).entity(IzdelkiZrno.posodobiIzdelek(i)).build();
     }

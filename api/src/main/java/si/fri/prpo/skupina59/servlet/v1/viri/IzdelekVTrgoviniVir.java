@@ -2,10 +2,14 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 
 
 import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
+import si.fri.prpo.skupina59.izjeme.NeveljavniIzdelekVTrgoviniIzjema;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajIzdelekVTrgoviniInterceptor;
+import si.fri.prpo.skupina59.servlet.v1.exceptionMapper.NeveljavniIzdelekVTrgoviniExceptionMapper;
 import si.fri.prpo.skupina59.zrna.IzdelkiVTrgoviniZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,11 +33,13 @@ public class IzdelekVTrgoviniVir {
     }
 
     @POST
+    @Interceptors(ValidirajIzdelekVTrgoviniInterceptor.class)
     public Response dodajIzdelekVTrgovini(IzdelekVTrgovini ivt){
-        return Response.status(Response.Status.CREATED).entity(IzdelkiVTrgoviniZrno.dodajIzdelekVTrgovini(ivt)).build();
+            return Response.status(Response.Status.CREATED).entity(IzdelkiVTrgoviniZrno.dodajIzdelekVTrgovini(ivt)).build();
     }
 
     @DELETE
+    @Interceptors(ValidirajIzdelekVTrgoviniInterceptor.class)
     public Response odstraniIzdelekVTrgovini(IzdelekVTrgovini ivt){
         return Response.status(Response.Status.OK).entity(IzdelkiVTrgoviniZrno.izbrisiIzdelekVTrgovini(ivt.getId())).build();
     }
@@ -45,6 +51,7 @@ public class IzdelekVTrgoviniVir {
     }
 
     @PUT
+    @Interceptors(ValidirajIzdelekVTrgoviniInterceptor.class)
     public Response posodobiIzdelekVTrgovini(IzdelekVTrgovini ivt){
         return Response.status(Response.Status.OK).entity(IzdelkiVTrgoviniZrno.posodobiIzdelekVTrgovini(ivt)).build();
     }

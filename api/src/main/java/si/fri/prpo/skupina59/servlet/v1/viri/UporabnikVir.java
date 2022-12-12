@@ -4,10 +4,12 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 import si.fri.prpo.skupina59.entitete.Uporabnik;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajUporabnikaInterceptor;
 import si.fri.prpo.skupina59.zrna.UporabnikZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -46,11 +48,13 @@ public class UporabnikVir {
     }
 
     @POST
+    @Interceptors(ValidirajUporabnikaInterceptor.class)
     public Response dodajUporabnika(Uporabnik u){
         return Response.status(Response.Status.CREATED).entity(UporabnikZrno.dodajUporabnik(u)).build();
     }
 
     @DELETE
+    @Interceptors(ValidirajUporabnikaInterceptor.class)
     public Response odstraniUporabnika(Uporabnik u){
         return Response.status(Response.Status.OK).entity(UporabnikZrno.izbrisiUporabnika(u.getId())).build();
     }
@@ -62,6 +66,7 @@ public class UporabnikVir {
     }
 
     @PUT
+    @Interceptors(ValidirajUporabnikaInterceptor.class)
     public Response posodobiUporabnika(Uporabnik u){
         return Response.status(Response.Status.OK).entity(UporabnikZrno.posodobiUporabnika(u)).build();
     }

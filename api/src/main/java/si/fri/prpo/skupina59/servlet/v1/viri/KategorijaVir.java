@@ -4,10 +4,13 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.skupina59.entitete.Izdelek;
 import si.fri.prpo.skupina59.entitete.Kategorija;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajIzdelekInterceptor;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajKategorijoInterceptor;
 import si.fri.prpo.skupina59.zrna.KategorijaZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -46,11 +49,13 @@ public class KategorijaVir {
     }
 
     @POST
+    @Interceptors(ValidirajKategorijoInterceptor.class)
     public Response dodajKategorijo(Kategorija k){
         return Response.status(Response.Status.CREATED).entity(KategorijaZrno.dodajKategorijo(k)).build();
     }
 
     @DELETE
+    @Interceptors(ValidirajKategorijoInterceptor.class)
     public Response odstraniKategorijo(Kategorija k){
         return Response.status(Response.Status.OK).entity(KategorijaZrno.izbrisiKategorijo(k.getId())).build();
     }
@@ -62,6 +67,7 @@ public class KategorijaVir {
     }
 
     @PUT
+    @Interceptors(ValidirajKategorijoInterceptor.class)
     public Response posodobiKategorijo(Kategorija k){
         return Response.status(Response.Status.OK).entity(KategorijaZrno.posodobiKategorijo(k)).build();
     }

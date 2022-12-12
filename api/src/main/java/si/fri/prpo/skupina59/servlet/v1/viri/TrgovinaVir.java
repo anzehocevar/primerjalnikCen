@@ -3,10 +3,13 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.entitete.Trgovina;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajKategorijoInterceptor;
+import si.fri.prpo.skupina59.prestrezniki.ValidirajTrgovinoInterceptor;
 import si.fri.prpo.skupina59.zrna.TrgovinaZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -45,11 +48,13 @@ public class TrgovinaVir {
     }
 
     @POST
+    @Interceptors(ValidirajTrgovinoInterceptor.class)
     public Response dodajTrgovino(Trgovina t){
         return Response.status(Response.Status.CREATED).entity(TrgovinaZrno.dodajTrgovino(t)).build();
     }
 
     @DELETE
+    @Interceptors(ValidirajTrgovinoInterceptor.class)
     public Response odstraniTrgovino(Trgovina t){
         return Response.status(Response.Status.OK).entity(TrgovinaZrno.izbrisiTrgovino(t.getId())).build();
     }
@@ -61,6 +66,7 @@ public class TrgovinaVir {
     }
 
     @PUT
+    @Interceptors(ValidirajTrgovinoInterceptor.class)
     public Response posodobiIzdelek(Trgovina t){
         return Response.status(Response.Status.OK).entity(TrgovinaZrno.posodobiTrgovino(t)).build();
     }
