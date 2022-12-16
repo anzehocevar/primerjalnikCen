@@ -1,6 +1,11 @@
 package si.fri.prpo.skupina59.servlet.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 import si.fri.prpo.skupina59.prestrezniki.ValidirajKategorijoInterceptor;
@@ -30,6 +35,11 @@ public class TrgovinaVir {
     protected UriInfo uriInfo;
 
     @GET
+    @Operation(summary = "Pridobi vse trgovine", description = "Vrne vse trgovine.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
     public Response vrniTrgovine(){
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -39,6 +49,11 @@ public class TrgovinaVir {
     }
 
     @GET
+    @Operation(summary = "Pridobi trgovino", description = "Vrne trgovino z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
     @Path("{id}")
     public Response vrniTrgovino(@PathParam("id") Integer id){
 
@@ -48,26 +63,46 @@ public class TrgovinaVir {
     }
 
     @POST
+    @Operation(summary = "Dodaj trgovino", description = "Doda trgovino podano kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
     @Interceptors(ValidirajTrgovinoInterceptor.class)
     public Response dodajTrgovino(Trgovina t){
         return Response.status(Response.Status.CREATED).entity(TrgovinaZrno.dodajTrgovino(t)).build();
     }
 
     @DELETE
+    @Operation(summary = "Izbrise trgovino", description = "Izbrise trgovino podano kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
     @Interceptors(ValidirajTrgovinoInterceptor.class)
     public Response odstraniTrgovino(Trgovina t){
         return Response.status(Response.Status.OK).entity(TrgovinaZrno.izbrisiTrgovino(t.getId())).build();
     }
 
     @DELETE
+    @Operation(summary = "Izbrise trgovino", description = "Izbrise trgovino z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
     @Path("{id}")
-    public Response odstraniIzdelek(@PathParam("id") Integer id){
+    public Response odstraniTrgovino(@PathParam("id") Integer id){
         return Response.status(Response.Status.OK).entity(TrgovinaZrno.izbrisiTrgovino(id)).build();
     }
 
     @PUT
+    @Operation(summary = "Posodobi trgovino", description = "Posodobi trgovino podano kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
     @Interceptors(ValidirajTrgovinoInterceptor.class)
-    public Response posodobiIzdelek(Trgovina t){
+    public Response posodobiTrgovino(Trgovina t){
         return Response.status(Response.Status.OK).entity(TrgovinaZrno.posodobiTrgovino(t)).build();
     }
 

@@ -2,6 +2,11 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 import si.fri.prpo.skupina59.entitete.Uporabnik;
 import si.fri.prpo.skupina59.prestrezniki.ValidirajUporabnikaInterceptor;
@@ -30,6 +35,11 @@ public class UporabnikVir {
     protected UriInfo uriInfo;
 
     @GET
+    @Operation(summary = "Pridobi vse uporabnike", description = "Vrne vse uporabnike.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Uporabnik.class)))
+    })
     public Response vrniUporabnike(){
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -39,6 +49,11 @@ public class UporabnikVir {
     }
 
     @GET
+    @Operation(summary = "Pridobi uporabnika", description = "Vrne uporabnika z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Uporabnik.class)))
+    })
     @Path("{id}")
     public Response vrniUporabnika(@PathParam("id") Integer id){
 
@@ -48,24 +63,44 @@ public class UporabnikVir {
     }
 
     @POST
+    @Operation(summary = "Dodaj uporabnika", description = "Doda uporabnika podanega kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Uporabnik.class)))
+    })
     @Interceptors(ValidirajUporabnikaInterceptor.class)
     public Response dodajUporabnika(Uporabnik u){
         return Response.status(Response.Status.CREATED).entity(UporabnikZrno.dodajUporabnik(u)).build();
     }
 
     @DELETE
+    @Operation(summary = "Odstrani uporabnika", description = "Odstrani uporabnika podanega kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Uporabnik.class)))
+    })
     @Interceptors(ValidirajUporabnikaInterceptor.class)
     public Response odstraniUporabnika(Uporabnik u){
         return Response.status(Response.Status.OK).entity(UporabnikZrno.izbrisiUporabnika(u.getId())).build();
     }
 
     @DELETE
+    @Operation(summary = "Odstrani uporabnika", description = "Odstrani uporabnika z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Uporabnik.class)))
+    })
     @Path("{id}")
     public Response odstraniUporabnika(@PathParam("id") Integer id){
         return Response.status(Response.Status.OK).entity(UporabnikZrno.izbrisiUporabnika(id)).build();
     }
 
     @PUT
+    @Operation(summary = "Posodobi uporabnika", description = "Posodobi uporabnika podanega kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Uporabnik.class)))
+    })
     @Interceptors(ValidirajUporabnikaInterceptor.class)
     public Response posodobiUporabnika(Uporabnik u){
         return Response.status(Response.Status.OK).entity(UporabnikZrno.posodobiUporabnika(u)).build();

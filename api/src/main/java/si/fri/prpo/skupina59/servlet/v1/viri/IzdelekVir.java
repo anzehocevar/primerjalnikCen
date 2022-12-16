@@ -50,6 +50,11 @@ public class IzdelekVir {
     }
 
     @GET
+    @Operation(summary = "Vrni izdelek", description = "Vrne izdelek z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
     @Path("{id}")
     public Response vrniIzdelek(@PathParam("id") Integer id){
 
@@ -60,24 +65,44 @@ public class IzdelekVir {
 
 
     @POST
+    @Operation(summary = "Dodaj izdelek", description = "Doda izdelek podan kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
     @Interceptors(ValidirajIzdelekInterceptor.class)
     public Response dodajIzdelek(Izdelek i){
         return Response.status(Response.Status.CREATED).entity(IzdelkiZrno.dodajIzdelek(i)).build();
     }
 
     @DELETE
+    @Operation(summary = "Odstrani izdelek", description = "Odstrani izdelek podan kot parameter.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
     @Interceptors(ValidirajIzdelekInterceptor.class)
     public Response odstraniIzdelek(Izdelek i){
         return Response.status(Response.Status.OK).entity(IzdelkiZrno.izbrisiIzdelek(i.getId())).build();
     }
 
     @DELETE
+    @Operation(summary = "Odstrani izdelek", description = "Odstrani izdelek z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
     @Path("{id}")
     public Response odstraniIzdelek(@PathParam("id") Integer id){
         return Response.status(Response.Status.OK).entity(IzdelkiZrno.izbrisiIzdelek(id)).build();
     }
 
     @PUT
+    @Operation(summary = "Posodobi izdelek", description = "Posodobi izdelek v bazi.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
     @Interceptors(ValidirajIzdelekInterceptor.class)
     public Response posodobiIzdelek(Izdelek i){
         return Response.status(Response.Status.OK).entity(IzdelkiZrno.posodobiIzdelek(i)).build();
