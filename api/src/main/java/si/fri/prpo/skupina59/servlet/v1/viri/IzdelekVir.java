@@ -2,6 +2,7 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -38,15 +39,29 @@ public class IzdelekVir {
     @GET
     @Operation(summary = "Pridobi vse izdelke", description = "Vrne vse izdelke. Omogoča uporabo ostranjevanja, filtriranja in sortiranja")
     @APIResponses({
-            @APIResponse(description = "Podatki o izdelkih", responseCode = "200", content = @Content(schema = @Schema(implementation =
+            @APIResponse(description = "Podatki o izdelkih", responseCode = "200",
+                    headers = {@Header(name = "X-Total-Count", description = "stevilo vrnjenih izdelkov")},
+                    content = @Content(schema = @Schema(implementation =
                     Izdelek.class)))
     })
     public Response vrniIzdelke(){
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Izdelek> izdelki = IzdelkiZrno.pridobiIzdelke(query);// pridobi izdelke
+        Long izdelkiCount = IzdelkiZrno.pridobiIzdelkeCount(query);
 
-        return Response.status(Response.Status.OK).entity(izdelki).build();
+        /*
+        to test x-total-count
+        curl -X DELETE http://127.0.0.1:8080/v1/izdelekvtrgovini/1
+        curl -X DELETE http://127.0.0.1:8080/v1/izdelekvtrgovini/2
+        curl -X DELETE http://127.0.0.1:8080/v1/izdelek/1
+         */
+
+        return Response
+                .ok(IzdelkiZrno.pridobiIzdelke(query))
+                .header("X-Total-Count", izdelkiCount)
+                .build();
+        //return Response.status(Response.Status.OK).entity(izdelki).build();
     }
 
     @GET

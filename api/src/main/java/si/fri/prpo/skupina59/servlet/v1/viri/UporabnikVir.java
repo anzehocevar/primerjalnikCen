@@ -44,8 +44,13 @@ public class UporabnikVir {
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Uporabnik> uporabniki = UporabnikZrno.pridobiUporabnike(query);// pridobi izdelke
+        Long uporabnikiCount = UporabnikZrno.pridobiUporabnikeCount(query);
 
-        return Response.status(Response.Status.OK).entity(uporabniki).build();
+        return Response
+                .ok(UporabnikZrno.pridobiUporabnike(query))
+                .header("X-Total-Count", uporabnikiCount)
+                .build();
+        //return Response.status(Response.Status.OK).entity(uporabniki).build();
     }
 
     @GET

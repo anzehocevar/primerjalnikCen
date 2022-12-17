@@ -3,6 +3,7 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -38,15 +39,24 @@ public class KategorijaVir {
     @GET
     @Operation(summary = "Pridobi vse kategorije", description = "Vrne vse izdelke.")
     @APIResponses({
-            @APIResponse(description = "Podatki o kategoriji", responseCode = "200", content = @Content(schema = @Schema(implementation =
+            @APIResponse(description = "Podatki o kategoriji", responseCode = "200",
+                    headers = {@Header(name = "X-Total-Count", description = "stevilo vrnjenih kategorij")},
+                    content = @Content(schema = @Schema(implementation =
                     Kategorija.class)))
     })
     public Response vrniKategorije(){
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Kategorija> kategorije = KategorijaZrno.pridobiKategorije(query);// pridobi izdelke
+        Long kategorijaCount = KategorijaZrno.pridobiKategorijeCount(query);
 
-        return Response.status(Response.Status.OK).entity(kategorije).build();
+
+        return Response
+                .ok(KategorijaZrno.pridobiKategorije(query))
+                .header("X-Total-Count", kategorijaCount)
+                .build();
+
+        //return Response.status(Response.Status.OK).entity(kategorije).build();
     }
 
     @GET

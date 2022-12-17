@@ -81,5 +81,8 @@ public class UporabnikZrno {
         return false;
     }
 
+    public long pridobiUporabnikeCount(QueryParameters query){
+        return JPAUtils.queryEntitiesCount(em, Izdelek.class, query);
+    }
 
 }

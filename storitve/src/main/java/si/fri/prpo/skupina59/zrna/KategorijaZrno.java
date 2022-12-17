@@ -92,4 +92,8 @@ public class KategorijaZrno {
     }
 
 
+    public long pridobiKategorijeCount(QueryParameters query){
+        return JPAUtils.queryEntitiesCount(em, Kategorija.class, query);
+    }
+
 }

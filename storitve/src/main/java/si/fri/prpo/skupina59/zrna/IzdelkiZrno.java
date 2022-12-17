@@ -82,5 +82,9 @@ public class IzdelkiZrno {
         return false;
     }
 
+    public long pridobiIzdelkeCount(QueryParameters query){
+        return JPAUtils.queryEntitiesCount(em, Izdelek.class, query);
+    }
+
 
 }

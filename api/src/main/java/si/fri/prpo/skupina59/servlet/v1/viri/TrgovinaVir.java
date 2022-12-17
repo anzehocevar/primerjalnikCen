@@ -2,6 +2,7 @@ package si.fri.prpo.skupina59.servlet.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -10,6 +11,7 @@ import si.fri.prpo.skupina59.entitete.Kategorija;
 import si.fri.prpo.skupina59.entitete.Trgovina;
 import si.fri.prpo.skupina59.prestrezniki.ValidirajKategorijoInterceptor;
 import si.fri.prpo.skupina59.prestrezniki.ValidirajTrgovinoInterceptor;
+import si.fri.prpo.skupina59.zrna.KategorijaZrno;
 import si.fri.prpo.skupina59.zrna.TrgovinaZrno;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -37,15 +39,23 @@ public class TrgovinaVir {
     @GET
     @Operation(summary = "Pridobi vse trgovine", description = "Vrne vse trgovine.")
     @APIResponses({
-            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200",
+                    headers = {@Header(name = "X-Total-Count", description = "stevilo vrnjenih trgovin")},
+                    content = @Content(schema = @Schema(implementation =
                     Trgovina.class)))
     })
     public Response vrniTrgovine(){
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         List<Trgovina> trgovine = TrgovinaZrno.pridobiTrgovine(query);// pridobi izdelke
+        Long trgovinaCount = TrgovinaZrno.pridobiTrgovineCount(query);
 
-        return Response.status(Response.Status.OK).entity(trgovine).build();
+        return Response
+                .ok(TrgovinaZrno.pridobiTrgovine(query))
+                .header("X-Total-Count", trgovinaCount)
+                .build();
+
+        //return Response.status(Response.Status.OK).entity(trgovine).build();
     }
 
     @GET

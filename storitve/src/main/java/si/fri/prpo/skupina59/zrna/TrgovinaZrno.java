@@ -82,5 +82,10 @@ public class TrgovinaZrno {
         return false;
     }
 
+    public long pridobiTrgovineCount(QueryParameters query){
+        return JPAUtils.queryEntitiesCount(em, Trgovina.class, query);
+    }
+
+
 
 }
