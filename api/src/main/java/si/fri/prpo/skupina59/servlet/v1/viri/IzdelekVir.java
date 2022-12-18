@@ -47,7 +47,6 @@ public class IzdelekVir {
     public Response vrniIzdelke(){
 
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        List<Izdelek> izdelki = IzdelkiZrno.pridobiIzdelke(query);// pridobi izdelke
         Long izdelkiCount = IzdelkiZrno.pridobiIzdelkeCount(query);
 
         /*
