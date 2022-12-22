@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.servlet.v1.viri;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -28,6 +29,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
+
+@CrossOrigin(supportedMethods = "GET")
 public class IzdelekVir {
     @Inject
     private IzdelkiZrno IzdelkiZrno;
