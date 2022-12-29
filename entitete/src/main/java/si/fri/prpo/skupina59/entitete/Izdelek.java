@@ -29,7 +29,7 @@ public class Izdelek {
     private Kategorija kategorija;
 
     @JsonbTransient
-    @OneToMany(mappedBy = "izdelek", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "izdelek", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<IzdelekVTrgovini> izdelkiVTrgovini;
 
     // getter in setter metode

@@ -34,7 +34,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 
-@CrossOrigin(supportedMethods = "GET, POST")
+@CrossOrigin(supportedMethods = "GET, POST, DELETE")
 public class IzdelekVir {
     @Inject
     private IzdelkiZrno IzdelkiZrno;
