@@ -22,7 +22,7 @@ public class Trgovina {
     private String spletna_stran;
 
     @JsonbTransient
-    @OneToMany(mappedBy = "trgovina")
+    @OneToMany(mappedBy = "trgovina", cascade = CascadeType.ALL)
     List<IzdelekVTrgovini> izdelkiVTrgovini;
 
     //getter in setter metode

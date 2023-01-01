@@ -2,17 +2,18 @@ package si.fri.prpo.skupina59.zrna;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.prpo.skupina59.DTO.TrgovineIzdelkaDTO;
 import si.fri.prpo.skupina59.anotacije.BeleziKlice;
 import si.fri.prpo.skupina59.entitete.Izdelek;
+import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
+import si.fri.prpo.skupina59.entitete.Trgovina;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,6 +35,29 @@ public class IzdelkiZrno {
     @PreDestroy
     private void logDestruct(){
         logger.info("IzdelkiZrno je bilo uniceno");
+    }
+
+    @BeleziKlice
+    public List<TrgovineIzdelkaDTO> pridobiTrgovine(Integer id){
+        Query q = em.createNamedQuery("Izdelek.getTrgovine");
+        Izdelek i = pridobiIzdelek(id);
+        q.setParameter("id", i);
+
+        List<Object[]> podrobnosti = q.getResultList();
+        List<TrgovineIzdelkaDTO> seznam = new ArrayList<>();
+        for(Object[] a : podrobnosti){
+            Trgovina t = (Trgovina)a[0];
+            IzdelekVTrgovini ivt = (IzdelekVTrgovini)a[1];
+
+            TrgovineIzdelkaDTO d = new TrgovineIzdelkaDTO();
+            d.setTrgovina(t);
+            d.setCena(ivt.getCena());
+            d.setZaloga(ivt.getZaloga());
+
+            seznam.add(d);
+        }
+
+        return seznam;
     }
 
     @BeleziKlice

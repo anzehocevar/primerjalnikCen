@@ -1,5 +1,6 @@
 package si.fri.prpo.skupina59.servlet.v1.viri;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -8,7 +9,11 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.skupina59.DTO.IzdelekDTO;
+import si.fri.prpo.skupina59.DTO.IzdelekVTrgoviniDTO;
+import si.fri.prpo.skupina59.DTO.TrgovineIzdelkaDTO;
 import si.fri.prpo.skupina59.entitete.Izdelek;
+import si.fri.prpo.skupina59.entitete.IzdelekVTrgovini;
+import si.fri.prpo.skupina59.entitete.Trgovina;
 import si.fri.prpo.skupina59.poslovnaZrna.UpravljanjeIzdelkovZrno;
 import si.fri.prpo.skupina59.prestrezniki.ValidirajIzdelekInterceptor;
 import si.fri.prpo.skupina59.prestrezniki.ValidirajIzdelekVTrgoviniInterceptor;
@@ -29,6 +34,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
+
+@CrossOrigin(supportedMethods = "GET, POST, DELETE")
 public class IzdelekVir {
     @Inject
     private IzdelkiZrno IzdelkiZrno;
@@ -73,6 +80,20 @@ public class IzdelekVir {
     public Response vrniIzdelek(@PathParam("id") Integer id){
 
         Izdelek izdelek = IzdelkiZrno.pridobiIzdelek(id);// pridobi izdelke
+
+        return Response.status(Response.Status.OK).entity(izdelek).build();
+    }
+
+    @GET
+    @Operation(summary = "Vrni trgovine", description = "Vrne trgovine kjer se prodaja izdelek z IDjem ter cene v teh trgovinah")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovinah kjer se prodaja izdelek", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Izdelek.class)))
+    })
+    @Path("podrobno/{id}")
+    public Response vrniTrgovine(@PathParam("id") Integer id){
+
+        List<TrgovineIzdelkaDTO> izdelek = IzdelkiZrno.pridobiTrgovine(id);// pridobi izdelke
 
         return Response.status(Response.Status.OK).entity(izdelek).build();
     }

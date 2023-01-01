@@ -10,7 +10,8 @@ import java.util.List;
         @NamedQuery(name = "Izdelek.getAll", query = "SELECT o FROM izdelek o"),
         @NamedQuery(name = "Izdelek.getById", query = "SELECT o FROM izdelek o WHERE o.id = :id"),
         @NamedQuery(name = "Izdelek.getByName", query = "SELECT o FROM izdelek o WHERE o.ime = :ime"),
-        @NamedQuery(name = "Izdelek.getByLike", query = "SELECT o FROM izdelek o WHERE o.ime LIKE CONCAT('%',:ime,'%')")    })
+        @NamedQuery(name = "Izdelek.getByLike", query = "SELECT o FROM izdelek o WHERE o.ime LIKE CONCAT('%',:ime,'%')"),
+        @NamedQuery(name = "Izdelek.getTrgovine", query = "SELECT t, ivt FROM trgovina i JOIN i.izdelkiVTrgovini ivt JOIN ivt.trgovina t WHERE ivt.izdelek = :id") })
 public class Izdelek {
 
     @Id
@@ -28,7 +29,7 @@ public class Izdelek {
     private Kategorija kategorija;
 
     @JsonbTransient
-    @OneToMany(mappedBy = "izdelek", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "izdelek", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<IzdelekVTrgovini> izdelkiVTrgovini;
 
     // getter in setter metode

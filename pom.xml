@@ -24,6 +24,7 @@
         <kumuluzee-rest.version>1.5.1</kumuluzee-rest.version>
         <kumuluzee-openapi.version>1.4.0</kumuluzee-openapi.version>
         <kumuluzee-config-mp.version>2.0.0</kumuluzee-config-mp.version>
+        <kumuluzee-cors.version>2.0.0</kumuluzee-cors.version>
         <postgresql.version>42.5.0</postgresql.version>
     </properties>
 
@@ -62,6 +63,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.kumuluz.ee.cors</groupId>
+                <artifactId>kumuluzee-cors</artifactId>
+                <version>${kumuluzee-cors.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
@@ -84,6 +91,8 @@
                 <artifactId>storitve</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+
 
 
 
