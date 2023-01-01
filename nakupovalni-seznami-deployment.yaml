@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nakupovalni-seznami-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: primerjalnik-cen
+  template:
+    metadata:
+      labels:
+        app: primerjalnik-cen
+    spec:
+      containers:
+        - image: mk2529/primerjalnik-cen:latest
+          name: primerjalnik-cen
+          env:
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+              value: jdbc:postgresql://chunee.db.elephantsql.com:5432/rlufybtm
+            - name: KUMULUZEE_DATASOURCES0_USERNAME
+              value: rlufybtm
+            - name: KUMULUZEE_DATASOURCES0_PASSWORD
+              value: XQodnfLnQZZsD0Nt8Zjl9gS_g3YZSoJW
+          ports:
+            - containerPort: 8080
+              name: server
+              protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: primerjalnik-cen
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: primerjalnik-cen

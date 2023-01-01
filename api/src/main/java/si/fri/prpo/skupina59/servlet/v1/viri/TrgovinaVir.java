@@ -18,10 +18,14 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +74,30 @@ public class TrgovinaVir {
         Trgovina trgovina = TrgovinaZrno.pridobiTrgovino(id);
 
         return Response.status(Response.Status.OK).entity(trgovina).build();
+    }
+
+    @GET
+    @Operation(summary = "Pridobi koordinate trgovine", description = "Vrne koordinate trgovine z dolocenim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o trgovini", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Trgovina.class)))
+    })
+    @Path("koor/{id}")
+    public Response vrniKoordinateTrgovine(@PathParam("id") Integer id){
+
+        Trgovina trgovina = TrgovinaZrno.pridobiTrgovino(id);
+        String naslov = trgovina.getKraj();
+
+        Client client = ClientBuilder.newClient();
+        String url = "https://trueway-geocoding.p.rapidapi.com/Geocode?address=" + URLEncoder.encode(naslov, StandardCharsets.UTF_8);
+        String name = client.target(url)
+                .request(MediaType.TEXT_PLAIN)
+                .header("X-RapidAPI-Key", "de31e04eafmsh7d78ec4a408d1b0p141690jsnfdc5541d45a3")
+                .header("X-RapidAPI-Host", "trueway-geocoding.p.rapidapi.com")
+                .get(String.class);
+
+
+        return Response.status(Response.Status.OK).entity(name).build();
     }
 
     @POST
